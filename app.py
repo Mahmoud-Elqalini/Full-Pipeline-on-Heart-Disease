@@ -9,7 +9,7 @@ st.title("Heart Disease Prediction 🫀")
 # Load the saved pipeline with try-except
 # -------------------------------
 try:
-    model = joblib.load(r"C:\Users\Soft\OneDrive - Faculty Of Engineering (Tanta University)\Documents\Github_Project\AI\model\final_model.pkl")
+    model = joblib.load(r"model/final_model.pkl")
 except FileNotFoundError:
     st.error("FileNotFoundError: Could not find 'model/final_model.pkl'. Please check the path.")
     st.stop()  # Stop further execution
