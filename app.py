@@ -11,27 +11,41 @@ st.title("Heart Disease Prediction 🫀")
 try:
     model = joblib.load(r"model/final_model.pkl")
 except FileNotFoundError:
-    st.error("FileNotFoundError: Could not find 'model/final_model.pkl'. Please check the path.")
-    st.stop()  # Stop further execution
+    st.error("❌ Could not find 'model/final_model.pkl'. Please check the path.")
+    st.stop()
 except Exception as e:
-    st.error(f"An error occurred while loading the model: {e}")
+    st.error(f"⚠️ An error occurred while loading the model: {e}")
     st.stop()
 
 # -------------------------------
-# Sidebar inputs
+# Instructions for mobile users
 # -------------------------------
-st.sidebar.header("Enter Patient Information")
-Age = st.sidebar.number_input("Age", 0, 120, 0)
-Chest_Pain_Type = st.sidebar.selectbox("Chest Pain Type", [1, 2, 3, 4])
-Resting_Blood_Pressure = st.sidebar.number_input("Resting Blood Pressure", 0, 250, 0)
-Cholesterol_Level = st.sidebar.number_input("Cholesterol Level", 0, 600, 0)
-Maximum_Heart_Rate_Achieved = st.sidebar.number_input("Maximum Heart Rate Achieved", 0, 220, 0)
-Exercise_Induced_Angina = st.sidebar.selectbox("Exercise Induced Angina", [0, 1])
-ST_Depression = st.sidebar.number_input("ST Depression", 0.0, 10.0, 0.0)
-Slope = st.sidebar.selectbox("Slope of ST Segment", [1, 2, 3])
-Number_of_Major_Arteries = st.sidebar.selectbox("Number of Major Arteries", [0, 1, 2, 3])
-Thalassemia = st.sidebar.selectbox("Thalassemia", [3, 6, 7])
+st.info("📱 لو بتستخدم الموبايل، كل المدخلات هتظهر هنا مباشرة (مش محتاج تفتح القائمة الجانبية).")
 
+st.subheader("📋 Enter Patient Information")
+
+# -------------------------------
+# Organize inputs in 2 columns
+# -------------------------------
+col1, col2 = st.columns(2)
+
+with col1:
+    Age = st.number_input("Age", 0, 120, 0)
+    Resting_Blood_Pressure = st.number_input("Resting Blood Pressure", 0, 200, 0)
+    Cholesterol_Level = st.number_input("Cholesterol Level", 0, 600, 0)
+    ST_Depression = st.number_input("ST Depression", 0.0, 10.0, 0.0)
+    Number_of_Major_Arteries = st.selectbox("Number of Major Arteries", [0, 1, 2, 3])
+
+with col2:
+    Chest_Pain_Type = st.selectbox("Chest Pain Type", [0, 1, 2, 3, 4])
+    Maximum_Heart_Rate_Achieved = st.number_input("Maximum Heart Rate Achieved", 0, 220, 0)
+    Exercise_Induced_Angina = st.selectbox("Exercise Induced Angina", [0, 1])
+    Slope = st.selectbox("Slope of ST Segment", [0, 1, 2, 3])
+    Thalassemia = st.selectbox("Thalassemia", [0, 3, 6, 7])
+
+# -------------------------------
+# Collect input into DataFrame
+# -------------------------------
 input_data = pd.DataFrame([{
     "Age": Age,
     "Chest Pain Type": Chest_Pain_Type,
@@ -46,17 +60,17 @@ input_data = pd.DataFrame([{
 }])
 
 # -------------------------------
-# Prediction with try-except
+# Prediction button
 # -------------------------------
-if st.button("Predict Heart Disease"):
+if st.button("🔍 Predict Heart Disease"):
     try:
         prediction = model.predict(input_data)[0]
         prob = model.predict_proba(input_data)[0][1]
         if prediction == 1:
-            st.error(f"The patient is likely to have heart disease ❤️ (Probability: {prob:.2f})")
+            st.error(f"❤️ The patient is **likely** to have heart disease (Probability: {prob:.2f})")
         else:
-            st.success(f"The patient is unlikely to have heart disease 💚 (Probability: {prob:.2f})")
+            st.success(f"💚 The patient is **unlikely** to have heart disease (Probability: {prob:.2f})")
     except ValueError as ve:
-        st.error(f"ValueError: {ve}. Check that the input features match the model features and order.")
+        st.error(f"⚠️ ValueError: {ve}. Check that the input features match the model features and order.")
     except Exception as e:
-        st.error(f"An unexpected error occurred during prediction: {e}")
+        st.error(f"❌ An unexpected error occurred during prediction: {e}")
