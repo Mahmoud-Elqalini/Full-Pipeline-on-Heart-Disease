@@ -3,7 +3,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-st.title("Heart Disease Prediction 🫀")
+st.markdown("<h1 style='text-align: center;'>Heart Disease Prediction 🫀</h1>", unsafe_allow_html=True)
+st.write("")
 st.write("")  
 st.write("")  
 st.write("")  
@@ -80,4 +81,4 @@ if st.button("Predict Heart Disease"):
         st.error(f"ValueError: {ve}. Check that the input features match the model features and order.")
     except Exception as e:
         st.error(f"An unexpected error occurred during prediction: {e}")
-        
+
