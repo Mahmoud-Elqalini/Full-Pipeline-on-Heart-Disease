@@ -4,6 +4,9 @@ import pandas as pd
 import joblib
 
 st.title("Heart Disease Prediction 🫀")
+st.write("")  
+st.write("")  
+st.write("")  
 
 # -------------------------------
 # Load the saved model
@@ -22,7 +25,7 @@ except Exception as e:
 # -------------------------------
 
 # -------------------------------
-# Centered title
+# Centered subtitle for patient info
 # -------------------------------
 st.markdown("<h3 style='text-align: center;'>📋 Enter Patient Information</h3>", unsafe_allow_html=True)
 
@@ -63,20 +66,18 @@ input_data = pd.DataFrame([{
 
 
 # -------------------------------
-# Centered Predict Button
+# Prediction with try-except
 # -------------------------------
-col1_btn, col2_btn, col3_btn = st.columns([1,2,1])
-with col2_btn:
-    if st.button("🔍 Predict Heart Disease"):
-        try:
-            prediction = model.predict(input_data)[0]
-            prob = model.predict_proba(input_data)[0][1]
-            if prediction == 1:
-                st.error(f"❤️ The patient is likely to have heart disease (Probability: {prob:.2f})")
-            else:
-                st.success(f"💚 The patient is unlikely to have heart disease (Probability: {prob:.2f})")
-        except ValueError as ve:
-            st.error(f"⚠️ ValueError: {ve}. Check that the input features match the model features and order.")
-        except Exception as e:
-            st.error(f"❌ An unexpected error occurred during prediction: {e}")
-            
+if st.button("Predict Heart Disease"):
+    try:
+        prediction = model.predict(input_data)[0]
+        prob = model.predict_proba(input_data)[0][1]
+        if prediction == 1:
+            st.error(f"The patient is likely to have heart disease ❤️ (Probability: {prob:.2f})")
+        else:
+            st.success(f"The patient is unlikely to have heart disease 💚 (Probability: {prob:.2f})")
+    except ValueError as ve:
+        st.error(f"ValueError: {ve}. Check that the input features match the model features and order.")
+    except Exception as e:
+        st.error(f"An unexpected error occurred during prediction: {e}")
+        
