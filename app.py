@@ -6,7 +6,7 @@ import joblib
 st.title("Heart Disease Prediction 🫀")
 
 # -------------------------------
-# Load the saved pipeline with try-except
+# Load the saved model
 # -------------------------------
 try:
     model = joblib.load(r"model/final_model.pkl")
@@ -25,7 +25,7 @@ st.info("📱 لو بتستخدم الموبايل، كل المدخلات هت�
 st.subheader("📋 Enter Patient Information")
 
 # -------------------------------
-# Organize inputs in 2 columns
+# Inputs in 2 columns
 # -------------------------------
 col1, col2 = st.columns(2)
 
@@ -60,16 +60,16 @@ input_data = pd.DataFrame([{
 }])
 
 # -------------------------------
-# Prediction button
+# Prediction
 # -------------------------------
 if st.button("🔍 Predict Heart Disease"):
     try:
         prediction = model.predict(input_data)[0]
         prob = model.predict_proba(input_data)[0][1]
         if prediction == 1:
-            st.error(f"❤️ The patient is **likely** to have heart disease (Probability: {prob:.2f})")
+            st.error(f"❤️ The patient is likely to have heart disease (Probability: {prob:.2f})")
         else:
-            st.success(f"💚 The patient is **unlikely** to have heart disease (Probability: {prob:.2f})")
+            st.success(f"💚 The patient is unlikely to have heart disease (Probability: {prob:.2f})")
     except ValueError as ve:
         st.error(f"⚠️ ValueError: {ve}. Check that the input features match the model features and order.")
     except Exception as e:
