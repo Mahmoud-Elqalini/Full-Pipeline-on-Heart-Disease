@@ -21,13 +21,13 @@ except Exception as e:
 # Sidebar inputs
 # -------------------------------
 st.sidebar.header("Enter Patient Information")
-Age = st.sidebar.number_input("Age", 20, 100, 50)
+Age = st.sidebar.number_input("Age", 0, 120, 0)
 Chest_Pain_Type = st.sidebar.selectbox("Chest Pain Type", [1, 2, 3, 4])
-Resting_Blood_Pressure = st.sidebar.number_input("Resting Blood Pressure", 80, 200, 120)
-Cholesterol_Level = st.sidebar.number_input("Cholesterol Level", 100, 400, 200)
-Maximum_Heart_Rate_Achieved = st.sidebar.number_input("Maximum Heart Rate Achieved", 60, 220, 150)
+Resting_Blood_Pressure = st.sidebar.number_input("Resting Blood Pressure", 0, 250, 0)
+Cholesterol_Level = st.sidebar.number_input("Cholesterol Level", 0, 600, 0)
+Maximum_Heart_Rate_Achieved = st.sidebar.number_input("Maximum Heart Rate Achieved", 0, 220, 0)
 Exercise_Induced_Angina = st.sidebar.selectbox("Exercise Induced Angina", [0, 1])
-ST_Depression = st.sidebar.number_input("ST Depression", 0.0, 10.0, 1.0)
+ST_Depression = st.sidebar.number_input("ST Depression", 0.0, 10.0, 0.0)
 Slope = st.sidebar.selectbox("Slope of ST Segment", [1, 2, 3])
 Number_of_Major_Arteries = st.sidebar.selectbox("Number of Major Arteries", [0, 1, 2, 3])
 Thalassemia = st.sidebar.selectbox("Thalassemia", [3, 6, 7])
